@@ -152,8 +152,8 @@ function App(){
                         <FailedRows rows={failedRows}/>
                     </div>
 
-                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                        <div className="sticky top-0 z-20 bg-white border-b border-gray-200 px-6 py-5">
+                    <div>
+                        {/* <div className="sticky top-0 z-20 bg-white border-b border-gray-200 px-6 py-5">
                             <div className="flex items-center justify-between">
                                 <div>
                                     <h2 className="text-2xl font-bold text-gray-900">
@@ -169,7 +169,7 @@ function App(){
                                     {records.length} Records
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className="max-h-[70vh] overflow-y-auto">
                             <RecordsTable

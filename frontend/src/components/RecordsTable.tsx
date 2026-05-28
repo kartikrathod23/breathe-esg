@@ -27,16 +27,16 @@ function RecordsTable({ records, onApprove, onReject }: Props) {
             </div>
 
             <div className="overflow-x-auto rounded-xl border border-gray-100">
-                <table className="w-[950px] xl:w-full table-fixed">
+                <table className="min-w-full table-auto">
                     <thead>
                         <tr className="border-b border-gray-200 text-left text-gray-600 font-semibold text-base">
-                            <th className="pb-4 pl-2 pt-2 w-[140px]">Type</th>
-                            <th className="pb-4 w-[110px]">Scope</th>
-                            <th className="pb-4 w-[220px]">Quantity</th>
-                            <th className="pb-4 w-[140px]">CO2e</th>
-                            <th className="pb-4 w-[120px]">Status</th>
-                            <th className="pb-4 w-[280px]">Review</th>
-                            <th className="pb-4 w-[140px]">Action</th>
+                            <th className="pb-4 pl-2 pt-2">Type</th>
+                            <th className="pb-4">Scope</th>
+                            <th className="pb-4">Quantity</th>
+                            <th className="pb-4">CO2e</th>
+                            <th className="pb-4">Status</th>
+                            <th className="pb-4">Review</th>
+                            <th className="pb-4">Action</th>
                         </tr>
                     </thead>
 

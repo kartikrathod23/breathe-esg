@@ -3,20 +3,15 @@ import io
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
 from apps.organizations.models import Organization
 from apps.ingestion.models import DataSource,RawRecord
 from apps.emissions.models import EmissionRecord
-
 from .serializers import UploadSerializer
 
 
 class UploadCSVView(APIView):
-
     def post(self,request):
-
         serializer=UploadSerializer(data=request.data)
-
         if not serializer.is_valid():
             return Response(serializer.errors,status=400)
 
@@ -32,9 +27,7 @@ class UploadCSVView(APIView):
             )
 
         file=serializer.validated_data["file"]
-
         decoded_file=file.read().decode("utf-8-sig")
-
         source=DataSource.objects.create(
             organization=organization,
             source_type=serializer.validated_data["source_type"],
@@ -47,7 +40,6 @@ class UploadCSVView(APIView):
         failed_records=0
 
         for row in reader:
-
             try:
 
                 raw_record=RawRecord.objects.create(
@@ -97,7 +89,6 @@ class UploadCSVView(APIView):
 
 
     def safe_float(self,value):
-
         try:
             return float(value)
 
@@ -106,20 +97,16 @@ class UploadCSVView(APIView):
 
 
     def normalize_row(self,row,source_type):
-
         if source_type=="sap":
-
             quantity=self.safe_float(
                 row.get("Quantity")
                 or row.get("MENGE")
             )
-
             unit=(
                 row.get("Unit")
                 or row.get("EINHEIT")
                 or "L"
             )
-
             fuel_type=(
                 row.get("Fuel Type")
                 or row.get("KRAFTSTOFF")
@@ -167,9 +154,7 @@ class UploadCSVView(APIView):
             }
 
         if source_type=="utility":
-
             quantity=self.safe_float(row.get("kWh"))
-
             suspicious=False
             reason=""
 
@@ -195,11 +180,8 @@ class UploadCSVView(APIView):
             }
 
         if source_type=="travel":
-
             distance=self.safe_float(row.get("Distance"))
-
             travel_type=row.get("Travel Type","Flight")
-
             suspicious=False
             reason=""
 

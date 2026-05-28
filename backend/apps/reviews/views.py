@@ -9,12 +9,9 @@ from django.utils import timezone
 
 from .models import AuditLog
 
-
 class ReviewRecordsView(APIView):
-
     def get(self,request):
         records=EmissionRecord.objects.all()
-
         suspicious=request.GET.get("suspicious")
         status_filter=request.GET.get("status")
 
@@ -30,7 +27,6 @@ class ReviewRecordsView(APIView):
 
 
 class ApproveRecordView(APIView):
-
     def post(self,request,record_id):
         try:
             record=EmissionRecord.objects.get(id=record_id)
@@ -52,9 +48,7 @@ class ApproveRecordView(APIView):
             performed_by="analyst"
         )
 
-        return Response({
-            "message":"Record approved"
-        })
+        return Response({"message":"Record approved"})
         
 
 class FailedRowsView(APIView):
@@ -62,3 +56,32 @@ class FailedRowsView(APIView):
         rows=RawRecord.objects.filter(status="failed").order_by("-created_at")
         serializer=RawRecordSerializer(rows,many=True)
         return Response(serializer.data)
+    
+    
+
+class RejectRecordView(APIView):
+    def post(self,request,record_id):
+        organization_id=request.data.get("organization_id")
+        try:
+            record=EmissionRecord.objects.get(
+                id=record_id,
+                organization_id=organization_id
+            )
+
+        except EmissionRecord.DoesNotExist:
+            return Response({"error":"Record not found"},status=404)
+
+        if record.is_locked:
+            return Response({"error":"Record already locked"},status=400)
+
+        record.status="rejected"
+        record.is_locked=True
+        record.save()
+
+        AuditLog.objects.create(
+            record=record,
+            action="rejected",
+            performed_by="analyst"
+        )
+
+        return Response({"message":"Record rejected"})

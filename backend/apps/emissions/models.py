@@ -6,6 +6,7 @@ class EmissionRecord(models.Model):
     STATUS_CHOICES=(
         ("review","Review"),
         ("approved","Approved"),
+        ("rejected","Rejected"),
     )
 
     organization=models.ForeignKey(Organization,on_delete=models.CASCADE)

@@ -3,6 +3,7 @@ import io
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser
 from apps.organizations.models import Organization
 from apps.ingestion.models import DataSource,RawRecord
 from apps.emissions.models import EmissionRecord
@@ -10,6 +11,7 @@ from .serializers import UploadSerializer
 
 
 class UploadCSVView(APIView):
+    parser_classes = [MultiPartParser, FormParser]
     def post(self,request):
         serializer=UploadSerializer(data=request.data)
         if not serializer.is_valid():

@@ -26,9 +26,9 @@ function RecordsTable({ records, onApprove, onReject }: Props) {
 
             </div>
 
-            <div className="overflow-x-auto rounded-xl border border-gray-100">
+            <div className="overflow-x-auto overflow-y-auto max-h-[65vh] rounded-xl border border-gray-100">
                 <table className="min-w-full table-auto">
-                    <thead>
+                    <thead className="sticky top-0 bg-white z-10">
                         <tr className="border-b border-gray-200 text-left text-gray-600 font-semibold text-base">
                             <th className="pb-4 pl-2 pt-2">Type</th>
                             <th className="pb-4">Scope</th>
